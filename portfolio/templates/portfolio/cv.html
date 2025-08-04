@@ -1,0 +1,62 @@
+{% extends "portfolio/base.html" %} {% load static %} 
+{% block title %}Lebenslauf | Flu{% endblock %} {% block content %}
+<div class="max-w-4xl mx-auto py-8 px-4">
+  <h1 class="text-3xl font-bold mb-6 text-center">Lebenslauf</h1>
+
+  <!-- Lebenslauf Download-Card -->
+  <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+    <p class="mb-4 text-gray-700 dark:text-gray-300">
+      Hier kannst du meinen aktuellen Lebenslauf herunterladen. Klick auf den
+      Button, um die Datei als PDF herunterzuladen.
+    </p>
+    <a
+      href="{% static 'portfolio/cv/Flu_CV.pdf' %}"
+      download
+      class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md shadow transition"
+    >
+      <i class="fas fa-download mr-2"></i> Lebenslauf herunterladen
+    </a>
+  </div>
+
+  <!-- Link zur Vorschau im Modal -->
+  <div class="mt-8 text-center">
+    <a
+      href="#"
+      class="text-blue-600 hover:underline"
+      @click.prevent="open = true"
+      >Lebenslauf in der Vorschau ansehen</a
+    >
+  </div>
+
+  <!-- Modal-Vorschau mit Alpine.js -->
+  <div
+    x-data="{ open: false }"
+    x-show="open"
+    class="fixed inset-0 flex items-center justify-center z-50"
+    style="display: none"
+  >
+    <!-- Overlay -->
+    <div
+      class="absolute inset-0 bg-black opacity-50"
+      @click="open = false"
+    ></div>
+    <!-- Modal-Content -->
+    <div
+      class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden max-w-3xl w-full p-4 relative"
+      x-transition
+    >
+      <button
+        class="absolute top-2 right-2 text-gray-700 dark:text-gray-300"
+        @click="open = false"
+      >
+        <i class="fas fa-times fa-lg"></i>
+      </button>
+      <iframe
+        src="{% static 'portfolio/cv/Flu_CV.pdf' %}"
+        class="w-full h-96 rounded-md"
+        frameborder="0"
+      ></iframe>
+    </div>
+  </div>
+</div>
+{% endblock %}

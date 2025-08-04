@@ -1,0 +1,46 @@
+{% extends "portfolio/base.html" %}
+{% block title %}Zertifikate | Flu{% endblock %}
+
+{% block content %}
+  <h1 class="text-2xl font-bold mb-6">🎓 Zertifikate</h1>
+
+  <!-- 🔽 Filter Dropdown -->
+  <form method="get" class="mb-6">
+    <label for="issuer" class="block mb-2 font-semibold text-gray-700 dark:text-gray-300">
+      Zertifikatsaussteller wählen:
+    </label>
+    <select name="issuer" id="issuer"
+            class="w-full md:w-64 p-2 border rounded-md dark:bg-gray-800 dark:text-white"
+            onchange="this.form.submit()">
+      <option value="">– bitte auswählen –</option>
+      {% for i in issuers %}
+        <option value="{{ i.id }}" {% if selected_issuer == i.id %}selected{% endif %}>{{ i.name }}</option>
+      {% endfor %}
+    </select>
+  </form>
+
+  <!-- 🧾 Zertifikate Grid -->
+  {% if certificates %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for c in certificates %}
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-4">
+          <h2 class="text-lg font-semibold">{{ c.name }}</h2>
+          <p class="text-sm text-gray-600 dark:text-gray-300">{{ c.category }}</p>
+          <p class="text-xs mt-2">
+            📅 {{ c.issue_date }} – {{ c.expiry_date|default:"∞" }}
+          </p>
+          <div class="mt-4 space-y-2 text-sm">
+            {% if c.url %}
+              <a href="{{ c.url }}" target="_blank" class="text-blue-600 hover:underline">🌐 Online-Link</a><br />
+            {% endif %}
+            {% if c.pdf_file %}
+              <a href="{{ c.pdf_file.url }}" target="_blank" class="text-green-600 hover:underline">📄 PDF öffnen</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-gray-600 dark:text-gray-400 mt-4">Bitte einen Aussteller auswählen.</p>
+  {% endif %}
+{% endblock %}
