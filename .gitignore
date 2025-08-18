@@ -81,3 +81,5 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+/config/settings.py
