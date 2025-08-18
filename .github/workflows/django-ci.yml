@@ -47,5 +47,6 @@ jobs:
         run: |
           python manage.py migrate
 
-      - name: Run tests with pytest
-        run: pytest --cov=portfolio --cov-report=term-missing
+      - name: 🧪 Run tests with pytest
+        run: |
+          pytest
