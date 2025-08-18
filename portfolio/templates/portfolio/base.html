@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="de" x-data x-bind:class="{ 'dark': localStorage.theme === 'dark' }">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -70,29 +70,16 @@
 
           {% if user.is_authenticated %}
           <!-- Dark Mode Toggle -->
-          <div
-            x-data="{ dark: localStorage.getItem('theme') === 'dark' }"
-            x-init="
-  dark && document.documentElement.classList.add('dark');
-"
-            class="ml-4"
+          <button
+            id="darkModeToggle"
+            class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            aria-label="Dark Mode Toggle"
           >
-            <button
-              @click="
-    dark = !dark;
-    localStorage.setItem('theme', dark ? 'dark' : 'light');
-    document.documentElement.classList.toggle('dark');
-  "
-              class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition"
-              aria-label="Dark Mode Toggle"
-            >
-              <i
-                x-show="!dark"
-                class="fas fa-moon text-gray-700 dark:text-gray-300"
-              ></i>
-              <i x-show="dark" class="fas fa-sun text-yellow-500"></i>
-            </button>
-          </div>
+            <i
+              id="darkIcon"
+              class="fas fa-moon text-gray-700 dark:text-gray-300"
+            ></i>
+          </button>
 
           <!-- User Dropdown -->
           <div class="relative">
@@ -213,48 +200,44 @@
       </a>
     </footer>
 
-    <!-- Dark Mode Toggle Script -->
-    <script
-      defer
-      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
-    ></script>
-
+    <!-- 🌙☀️ Dark Mode Script -->
     <script>
       document.addEventListener('DOMContentLoaded', () => {
+        const html = document.documentElement;
+        const darkToggle = document.getElementById('darkModeToggle');
+        const darkToggleMobile = document.getElementById(
+          'darkModeToggleMobile'
+        );
         const icon = document.getElementById('darkIcon');
         const iconMobile = document.getElementById('darkIconMobile');
 
-        const applyDarkMode = (isDark) => {
-          document.documentElement.classList.toggle('dark', isDark);
-          icon?.classList.replace(
-            isDark ? 'fa-moon' : 'fa-sun',
-            isDark ? 'fa-sun' : 'fa-moon'
-          );
-          iconMobile?.classList.replace(
-            isDark ? 'fa-moon' : 'fa-sun',
-            isDark ? 'fa-sun' : 'fa-moon'
-          );
-          localStorage.setItem('darkMode', isDark);
+        const applyTheme = (theme) => {
+          if (theme === 'dark') {
+            html.classList.add('dark');
+            icon?.classList.replace('fa-moon', 'fa-sun');
+            iconMobile?.classList.replace('fa-moon', 'fa-sun');
+          } else {
+            html.classList.remove('dark');
+            icon?.classList.replace('fa-sun', 'fa-moon');
+            iconMobile?.classList.replace('fa-sun', 'fa-moon');
+          }
+          localStorage.setItem('theme', theme);
         };
 
-        const stored = localStorage.getItem('darkMode');
-        const prefers = window.matchMedia(
+        const storedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia(
           '(prefers-color-scheme: dark)'
         ).matches;
-        applyDarkMode(stored === 'true' || (!stored && prefers));
+        applyTheme(storedTheme || (prefersDark ? 'dark' : 'light'));
 
-        document
-          .getElementById('darkModeToggle')
-          ?.addEventListener('click', () =>
-            applyDarkMode(!document.documentElement.classList.contains('dark'))
-          );
-        document
-          .getElementById('darkModeToggleMobile')
-          ?.addEventListener('click', () =>
-            applyDarkMode(!document.documentElement.classList.contains('dark'))
-          );
+        darkToggle?.addEventListener('click', () =>
+          applyTheme(html.classList.contains('dark') ? 'light' : 'dark')
+        );
+        darkToggleMobile?.addEventListener('click', () =>
+          applyTheme(html.classList.contains('dark') ? 'light' : 'dark')
+        );
 
-        // Avatar dropdown toggle
+        // Avatar dropdown
         const btn = document.getElementById('userMenuBtn');
         const menu = document.getElementById('userMenu');
         btn?.addEventListener('click', () => menu.classList.toggle('hidden'));
