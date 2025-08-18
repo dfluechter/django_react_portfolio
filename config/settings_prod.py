@@ -71,6 +71,8 @@ DATABASES = {
     )
 }
 
+DATABASES["default"] = dj_database_url.parse("postgresql://djangobackend_3z56_user:DGS7qk50FnLGr6NkL9EQ3vhVLqXtq4AV@dpg-d2hdeu0dl3ps73871410-a.frankfurt-postgres.render.com/djangobackend_3z56")
+
 LANGUAGE_CODE = "de-de"
 TIME_ZONE = "Europe/Berlin"
 USE_I18N = True
