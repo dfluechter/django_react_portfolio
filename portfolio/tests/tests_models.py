@@ -1,6 +1,4 @@
-import pytest
 from django.test import TestCase
-from portfolio.models import Certificate, CertificateIssuer, Project
 from portfolio.factories import (
     CertificateFactory,
     CertificateIssuerFactory,
@@ -16,7 +14,7 @@ class CertificateModelTest(TestCase):
     def test_certificate_has_valid_upload_path(self):
         cert = CertificateFactory()
         expected_path = f"certificates/{cert.issuer.name.lower().replace(' ', '-')}/{cert.pdf_file.name.split('/')[-1]}"
-        self.assertIn("certificates/", cert.pdf_file.name)
+        self.assertEqual(cert.pdf_file.name, expected_path)
         self.assertTrue(cert.pdf_file.name.endswith(".pdf"))
 
 
