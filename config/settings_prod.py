@@ -5,7 +5,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "insecure-secret")
-DEBUG = os.environ.get("DEBUG", "False") == "True"
+DEBUG = False
 ALLOWED_HOSTS = ["django-react-portfolio-s68r.onrender.com"]
 
 INSTALLED_APPS = [

@@ -1,18 +1,10 @@
 """
-WSGI config for config project.
-
-It exposes the WSGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
+WSGI config for portfolio project.
 """
 
 import os
-
 from django.core.wsgi import get_wsgi_application
 
-settings_module = 'config.settings_dev' if 'RENDER_EXTERNAL_HOSTNAME' in os.environ else 'config.settings_prod'
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
-    
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 
 application = get_wsgi_application()
