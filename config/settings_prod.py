@@ -11,7 +11,7 @@ environ.Env.read_env()
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "insecure-secret")
 DEBUG = False
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Get the hostname from the RENDER_EXTERNAL_HOSTNAME environment variable
 # if it exists.
