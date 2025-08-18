@@ -28,7 +28,8 @@ class CertificateIssuer(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=200)
     url = models.URLField()
-    created_at = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField()
 
     def __str__(self):
