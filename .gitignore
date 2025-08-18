@@ -10,7 +10,7 @@
 Thumbs.db
 
 # Media
-/media/
+#/media/
 
 
 # Byte-compiled / optimized / DLL files
