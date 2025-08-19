@@ -32,6 +32,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -41,6 +42,27 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    'https://*.onrender.com'
+]
+
+STORAGES = {
+    "default":{
+        "portfolio" : "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "portfolio" : "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+
+}
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default= os.environ['DATABASE_URL'], 
+        conn_max_age=600
+    )
+}
 
 ROOT_URLCONF = "config.urls"
 
@@ -62,16 +84,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
-
-DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600,
-        ssl_require=True,
-    )
-}
-
-DATABASES["default"] = dj_database_url.parse("postgresql://djangobackend_3z56_user:DGS7qk50FnLGr6NkL9EQ3vhVLqXtq4AV@dpg-d2hdeu0dl3ps73871410-a.frankfurt-postgres.render.com/djangobackend_3z56")
 
 LANGUAGE_CODE = "de-de"
 TIME_ZONE = "Europe/Berlin"
