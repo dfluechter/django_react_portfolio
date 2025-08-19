@@ -4,14 +4,9 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-import environ
-
-env = environ.Env()
-environ.Env.read_env()
-
 SECRET_KEY = os.environ.get("SECRET_KEY", "insecure-secret")
 DEBUG = False
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 # Get the hostname from the RENDER_EXTERNAL_HOSTNAME environment variable
 # if it exists.
@@ -68,7 +63,6 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
 
-'''
 DATABASES = {
     "default": dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
@@ -76,10 +70,8 @@ DATABASES = {
         ssl_require=True,
     )
 }
-'''
-DATABASES = {
-    'default': dj_database_url.parse(env('DATABASE_URL'))
- }
+
+DATABASES["default"] = dj_database_url.parse("postgresql://djangobackend_3z56_user:DGS7qk50FnLGr6NkL9EQ3vhVLqXtq4AV@dpg-d2hdeu0dl3ps73871410-a.frankfurt-postgres.render.com/djangobackend_3z56")
 
 LANGUAGE_CODE = "de-de"
 TIME_ZONE = "Europe/Berlin"
