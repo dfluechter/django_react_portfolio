@@ -1,24 +1,29 @@
-services:
-  - type: web
-    name: django-portfolio
-    env: python
-    plan: free
-    buildCommand: |
-      pip install -r requirements.txt
-      python manage.py collectstatic --noinput
-      python manage.py migrate
-    startCommand: gunicorn config.wsgi:application
-    envVars:
-      - key: DJANGO_SETTINGS_MODULE
-        value: config.settings
-      - key: PYTHON_VERSION
-        value: 3.11.9
-      - key: DATABASE_URL
-        fromDatabase:
-          name: django-portfolio-db
-          property: connectionString
-
+# Exported from Render on 2025-08-19T00:03:17Z
 databases:
-  - name: django-portfolio-db
-    plan: free
-    region: frankfurt
+- name: ProductionDatabase
+  databaseName: productiondatabase_i72w
+  user: productiondatabase_i72w_user
+  plan: free
+  region: frankfurt
+  ipAllowList:
+  - source: 0.0.0.0/0
+    description: everywhere
+  postgresMajorVersion: "17"
+services:
+- type: web
+  name: MyPortfolio
+  runtime: python
+  repo: https://github.com/dfluechter/django_react_portfolio
+  plan: free
+  envVars:
+  - key: DATABASE_URL
+    fromDatabase:
+      name: ProductionDatabase
+      property: connectionString
+  - key: PYTHON_VERSION
+    sync: false
+  region: frankfurt
+  buildCommand: pip install -r requirements.txt
+  startCommand: gunicorn config.wsgi:application
+  autoDeployTrigger: commit
+version: "1"
