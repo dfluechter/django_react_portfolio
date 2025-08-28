@@ -38,8 +38,8 @@
 ```bash
 git clone https://github.com/dfluechter/django_react_portfolio.git
 cd django_react_portfolio
-python -m venv env
-source env/bin/activate  # oder .\env\Scripts\activate auf Windows
+python -m venv .venv
+source .venv/bin/activate  # oder .\.venv\Scripts\activate auf Windows
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
