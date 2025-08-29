@@ -10,8 +10,8 @@
 Thumbs.db
 
 # Media
-#/media/
-
+media/
+static/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
