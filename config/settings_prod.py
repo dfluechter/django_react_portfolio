@@ -6,15 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "insecure-secret")
 DEBUG = False
-ALLOWED_HOSTS = []
-
-# Get the hostname from the RENDER_EXTERNAL_HOSTNAME environment variable
-# if it exists.
-
-RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if RENDER_EXTERNAL_HOSTNAME:
-    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
-ALLOWED_HOSTS.extend(['127.0.0.1', 'localhost'])
+ALLOWED_HOSTS = ['django-react-portfolio-s68r.onrender.com']
 
 INSTALLED_APPS = [
     "django.contrib.admin",
