@@ -1,9 +1,10 @@
 # 🌐 Django + Tailwind Portfolio
 
-![Django](https://img.shields.io/badge/Django-5.2-092E20?style=flat-square&logo=django)
+![Python](https://img.shields.io/badge/Python-3.13-orange?style=plastic&logo=python)
+![Django](https://img.shields.io/badge/Django-5.2-092E20?style=plastic&logo=django)
 [![Django CI](https://github.com/dfluechter/django_react_portfolio/actions/workflows/django-ci.yml/badge.svg)](https://github.com/dfluechter/django_react_portfolio/actions/workflows/django-ci.yml)
-![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.x-38B2AC?style=flat-square&logo=tailwind-css)
-![Status](https://img.shields.io/badge/status-in_progress-yellow?style=flat-square)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.x-38B2AC?style=plastic&logo=tailwind-css)
+![Status](https://img.shields.io/badge/status-in_progress-yellow?style=plastic&color=red)
 
 > ✨ Ein modernes, responsives Portfolio mit Django, Tailwind, Dark Mode, Burger-Menü und Auth via Djoser.
 
