@@ -55,7 +55,9 @@ STORAGES = {
     "staticfiles": {
         "portfolio" : "whitenoise.storage.CompressedStaticFilesStorage",
     },
-
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
 }
 
 DATABASES = {
