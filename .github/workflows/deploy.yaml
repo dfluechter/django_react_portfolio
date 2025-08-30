@@ -1,0 +1,16 @@
+name: Deploy to Render
+
+# Dieser Workflow wird bei jedem Push auf den 'main'-Branch ausgeführt.
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render Deploy
+        # Sendet eine POST-Anfrage an den Deploy Hook von Render.
+        # Das Secret wird sicher aus den GitHub Repository Secrets geladen.
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
