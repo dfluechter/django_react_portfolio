@@ -6,7 +6,6 @@ from portfolio.models import Certificate, CertificateIssuer, Project # Beispielm
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = get_user_model()
-        skip_postgeneration_save = True
 
     username = factory.Faker('user_name')
     email = factory.Faker('email')
