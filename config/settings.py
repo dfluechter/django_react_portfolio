@@ -1,3 +1,9 @@
+"""
+Django settings for the portfolio project.
+
+This module dynamically imports settings from either `settings_dev.py`
+or `settings_prod.py` based on the `DJANGO_ENV` environment variable.
+"""
 import os
 
 # Standard: Entwicklung
