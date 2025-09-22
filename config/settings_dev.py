@@ -1,6 +1,3 @@
-"""
-Development settings for the portfolio project.
-"""
 import os
 from pathlib import Path
 
