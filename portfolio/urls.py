@@ -1,4 +1,7 @@
 # portfolio/urls.py
+"""
+URL configuration for the portfolio app.
+"""
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views

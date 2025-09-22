@@ -1,4 +1,7 @@
 # portfolio/management/commands/import_certificates.py
+"""
+Django management command to import certificates from a directory.
+"""
 import os
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
@@ -8,9 +11,15 @@ from django.core.files import File
 CERT_DIR = "media/certificates"
 
 class Command(BaseCommand):
-    help = "Importiere alle PDFs aus /media/certificates/<issuer>/..."
+    """
+    Django management command to import certificates from a directory.
+    """
+    help = "Imports all PDFs from /media/certificates/<issuer>/..."
 
     def handle(self, *args, **kwargs):
+        """
+        Handles the import of certificates.
+        """
         base_path = os.path.abspath(CERT_DIR)
 
         for issuer_folder in os.listdir(base_path):
@@ -30,19 +39,19 @@ class Command(BaseCommand):
 
                 cert_name = os.path.splitext(filename)[0].replace("_", " ").title()
 
-                # Falls das Zertifikat schon da ist, skippen
+                # Skip if the certificate already exists
                 if Certificate.objects.filter(name=cert_name, issuer=issuer).exists():
                     continue
 
-                # Erstellen
+                # Create the certificate
                 with open(file_path, "rb") as f:
                     django_file = File(f)
                     cert = Certificate(
                         name=cert_name,
                         category="Auto-Import",
-                        issue_date="2024-01-01",  # Platzhalter
+                        issue_date="2024-01-01",  # Placeholder
                         expiry_date=None,
                         issuer=issuer
                     )
                     cert.pdf_file.save(filename, django_file, save=True)
-                    self.stdout.write(self.style.SUCCESS(f"Importiert: {cert_name}"))
+                    self.stdout.write(self.style.SUCCESS(f"Imported: {cert_name}"))
