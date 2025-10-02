@@ -30,7 +30,7 @@
 | Frontend   | Tailwind CSS 3         |
 | Auth       | Djoser (Token)         |
 | Styling    | Alpine.js, FontAwesome |
-| Deployment | coming soon...         |
+| Deployment | Render (Web Service), Netlify (Database) |
 
 ---
 
@@ -45,3 +45,23 @@ pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 ```
+
+---
+
+## 🚀 Deployment
+
+This project is configured for deployment on Render, with the database hosted on a separate provider like Netlify or Supabase.
+
+### 1. Database Setup (Netlify)
+
+1.  **Create a new PostgreSQL database** on your chosen platform (e.g., Netlify, Supabase, ElephantSQL).
+2.  **Locate the connection string (URL)** for your database. It should look something like this: `postgresql://user:password@host:port/dbname`.
+
+### 2. Web Service Setup (Render)
+
+1.  **Fork this repository** and create a new "Web Service" on Render, connecting it to your fork.
+2.  In the Render dashboard, go to the "Environment" settings for your web service.
+3.  **Add a new environment variable** with the key `DATABASE_URL`.
+4.  For the value, **paste the connection string** from your Netlify database.
+5.  Ensure the `DJANGO_ENV` environment variable is set to `prod` for production.
+6.  Render will use the `render.yaml` file to automatically configure the build and start commands. Your application should deploy and connect to your external database.
