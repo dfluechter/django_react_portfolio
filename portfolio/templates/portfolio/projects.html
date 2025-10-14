@@ -1,19 +1,62 @@
-{% extends "portfolio/base.html" %} {% block title %} Projekte | Flu
-{%endblock%} {% block content %}
-<h1 class="text-2xl font-bold mb-6">🛠️ Projekte</h1>
+{% extends "portfolio/base.html" %}
 
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-  {% for project in projects %}
-  <div
-    class="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-4 transition hover:shadow-xl"
-  >
-    <h2 class="text-xl font-semibold mb-2">{{ project.title }}</h2>
-    <p class="text-gray-600 dark:text-gray-300 text-sm">
-      {{ project.description|truncatechars:150 }}
-    </p>
-  </div>
-  {% empty %}
-  <p>Keine Projekte vorhanden.</p>
-  {% endfor %}
+{% block title %}Projekte | Portfolio{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8 text-gray-900 dark:text-white">🛠️ Meine Projekte</h1>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for project in projects %}
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+            {% if project.image %}
+            <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer">
+                <img class="w-full h-48 object-cover" src="{{ project.image.url }}" alt="{{ project.name }} Screenshot">
+            </a>
+            {% else %}
+            <div class="w-full h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                <span class="text-gray-500">Kein Bild</span>
+            </div>
+            {% endif %}
+
+            <div class="p-6">
+                <h2 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">{{ project.name }}</h2>
+                <span class="inline-block bg-{{ project.status|lower }}-100 text-{{ project.status|lower }}-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full dark:bg-{{ project.status|lower }}-200 dark:text-{{ project.status|lower }}-900">
+                    {{ project.get_status_display }}
+                </span>
+
+                <p class="text-gray-600 dark:text-gray-300 mt-4 text-sm leading-relaxed">
+                    {{ project.description|truncatechars:120 }}
+                </p>
+
+                <div class="mt-4">
+                    <h4 class="font-semibold text-sm text-gray-800 dark:text-gray-200 mb-2">Technologien:</h4>
+                    <div class="flex flex-wrap gap-2">
+                        {% for tech in project.technologies.all %}
+                        <span class="text-xs bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 py-1 px-2 rounded-md">{{ tech.name }}</span>
+                        {% empty %}
+                        <span class="text-xs text-gray-500">Keine angegeben</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="mt-6 flex justify-between items-center">
+                    {% if project.live_url %}
+                    <a href="{{ project.live_url }}" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors">
+                        Live-Demo →
+                    </a>
+                    {% endif %}
+                    {% if project.repository_url %}
+                    <a href="{{ project.repository_url }}" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors">
+                        <i class="fab fa-github fa-lg"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="col-span-full text-center text-gray-500 dark:text-gray-400">Momentan sind keine Projekte verfügbar.</p>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

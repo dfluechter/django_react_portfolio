@@ -25,12 +25,45 @@ class CertificateIssuer(models.Model):
     def __str__(self):
         return self.name
 
-class Project(models.Model):
-    name = models.CharField(max_length=200)
-    url = models.URLField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(max_length=100, null=True, blank=True)
-    description = models.TextField()
+def project_image_upload_path(instance, filename):
+    # slugify sorgt für saubere Ordnernamen
+    project_slug = slugify(instance.name)
+    return f"projects/{project_slug}/images/{filename}"
+
+class Technology(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, unique=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+class Project(models.Model):
+    STATUS_CHOICES = (
+        ("in_progress", "In Arbeit"),
+        ("completed", "Abgeschlossen"),
+        ("archived", "Archiviert"),
+    )
+
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True, blank=True)
+    title = models.CharField(max_length=100, null=True, blank=True)
+    description = models.TextField()
+    image = models.ImageField(upload_to=project_image_upload_path, blank=True, null=True)
+    live_url = models.URLField(blank=True)
+    repository_url = models.URLField(blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="in_progress")
+    created_at = models.DateTimeField(auto_now_add=True)
+    technologies = models.ManyToManyField(Technology, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
