@@ -24,12 +24,12 @@
 
 ## 🔧 Tech Stack
 
-| Kategorie  | Technologie            |
-| ---------- | ---------------------- |
-| Backend    | Django 5.2             |
-| Frontend   | Tailwind CSS 3         |
-| Auth       | Djoser (Token)         |
-| Styling    | Alpine.js, FontAwesome |
+| Kategorie  | Technologie                              |
+| ---------- | ---------------------------------------- |
+| Backend    | Django 5.2                               |
+| Frontend   | Tailwind CSS 3                           |
+| Auth       | Djoser (Token)                           |
+| Styling    | Alpine.js, FontAwesome                   |
 | Deployment | Render (Web Service), Netlify (Database) |
 
 ---
@@ -50,7 +50,7 @@ python manage.py runserver
 
 ## 🚀 Deployment
 
-This project is configured for deployment on Render, with the database hosted on a separate provider like Netlify or Supabase.
+This project is configured for deployment on Render, with the database hosted on Netlify.
 
 ### 1. Database Setup (Netlify)
 
