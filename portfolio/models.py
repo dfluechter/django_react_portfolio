@@ -3,7 +3,7 @@ from django.db import models
 from django.utils.text import slugify
 
 def certificate_upload_path(instance, filename):
-    # slugify sorgt für saubere Ordnernamen
+    # Slugify ensures clean folder names
     issuer_slug = slugify(instance.issuer.name)
     return f"certificates/{issuer_slug}/{filename}"
 
@@ -26,7 +26,7 @@ class CertificateIssuer(models.Model):
         return self.name
 
 def project_image_upload_path(instance, filename):
-    # slugify sorgt für saubere Ordnernamen
+    # Slugify ensures clean folder names
     project_slug = slugify(instance.name)
     return f"projects/{project_slug}/images/{filename}"
 
@@ -44,9 +44,9 @@ class Technology(models.Model):
 
 class Project(models.Model):
     STATUS_CHOICES = (
-        ("in_progress", "In Arbeit"),
-        ("completed", "Abgeschlossen"),
-        ("archived", "Archiviert"),
+        ("in_progress", "In Progress"),
+        ("completed", "Completed"),
+        ("archived", "Archived"),
     )
 
     name = models.CharField(max_length=200)
