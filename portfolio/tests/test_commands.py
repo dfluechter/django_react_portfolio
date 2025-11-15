@@ -30,7 +30,7 @@ def test_import_certificates_command(monkeypatch):
         certificate = Certificate.objects.first()
         assert certificate.name == "Test Certificate"
         assert certificate.issuer == issuer
-        assert out.getvalue().strip() == "Importiert: Test Certificate"
+        assert out.getvalue().strip() == "Imported: Test Certificate"
 
         # Run the command again to check for duplicates
         out = StringIO()

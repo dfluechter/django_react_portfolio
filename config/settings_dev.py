@@ -19,9 +19,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_URL = '/login/'  # oder '/login/'
-LOGIN_REDIRECT_URL = '/'  # oder irgendeine gültige Seite
-LOGOUT_REDIRECT_URL = '/login/' # Application definition
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login/'
+
+# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -154,7 +156,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-#STATICFILES_DIRS = [BASE_DIR / 'portfolio' / 'static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -166,4 +167,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 
-CORS_ALLOW_ALL_ORIGINS = True  # Nur für Dev!
+CORS_ALLOW_ALL_ORIGINS = True  # For development only!

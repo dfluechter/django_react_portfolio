@@ -8,10 +8,14 @@ from django.core.files import File
 CERT_DIR = "media/certificates"
 
 class Command(BaseCommand):
-    help = "Importiere alle PDFs aus /media/certificates/<issuer>/..."
+    help = "Import all PDFs from /media/certificates/<issuer>/..."
 
     def handle(self, *args, **kwargs):
         base_path = os.path.abspath(CERT_DIR)
+        
+        if not os.path.exists(base_path):
+            self.stdout.write(self.style.WARNING(f"Directory {base_path} does not exist"))
+            return
 
         for issuer_folder in os.listdir(base_path):
             issuer_path = os.path.join(base_path, issuer_folder)
@@ -30,19 +34,22 @@ class Command(BaseCommand):
 
                 cert_name = os.path.splitext(filename)[0].replace("_", " ").title()
 
-                # Falls das Zertifikat schon da ist, skippen
+                # Skip if certificate already exists
                 if Certificate.objects.filter(name=cert_name, issuer=issuer).exists():
                     continue
 
-                # Erstellen
-                with open(file_path, "rb") as f:
-                    django_file = File(f)
-                    cert = Certificate(
-                        name=cert_name,
-                        category="Auto-Import",
-                        issue_date="2024-01-01",  # Platzhalter
-                        expiry_date=None,
-                        issuer=issuer
-                    )
-                    cert.pdf_file.save(filename, django_file, save=True)
-                    self.stdout.write(self.style.SUCCESS(f"Importiert: {cert_name}"))
+                try:
+                    # Create certificate
+                    with open(file_path, "rb") as f:
+                        django_file = File(f)
+                        cert = Certificate(
+                            name=cert_name,
+                            category="Auto-Import",
+                            issue_date="2024-01-01",  # Placeholder
+                            expiry_date=None,
+                            issuer=issuer
+                        )
+                        cert.pdf_file.save(filename, django_file, save=True)
+                        self.stdout.write(self.style.SUCCESS(f"Imported: {cert_name}"))
+                except Exception as e:
+                    self.stdout.write(self.style.ERROR(f"Error importing {cert_name}: {str(e)}"))
