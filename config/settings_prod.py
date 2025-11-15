@@ -14,7 +14,7 @@ if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 CSRF_TRUSTED_ORIGINS = ['https://'+os.environ.get('RENDER_EXTERNAL_HOSTNAME')]
 SECRET_KEY = os.environ.get('SECRET_KEY')
-
+CORS_ALLOW_ALL_ORIGINS = False
 #ALLOWED_HOSTS = ['myportfolio-a3od.onrender.com']
 
 INSTALLED_APPS = [
@@ -50,13 +50,10 @@ CORS_ALLOWED_ORIGINS = [
 
 STORAGES = {
     "default":{
-        "portfolio" : "django.core.files.storage.FileSystemStorage",
+        "BACKEND" : "django.core.files.storage.FileSystemStorage",
     },
     "staticfiles": {
-        "portfolio" : "whitenoise.storage.CompressedStaticFilesStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "BACKEND" : "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
