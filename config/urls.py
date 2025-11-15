@@ -10,13 +10,7 @@ urlpatterns = [
     path('', include('portfolio.urls')),
     # Auth via Djoser
     path('auth/', include('djoser.urls')),
-    path('auth/jwt/', include('djoser.urls.jwt')),  # 🔑 JWT Pfad eindeutig machen
-
-    # Django Login/Logout (für Templates)
-    #path('login/', auth_views.LoginView.as_view(template_name='portfolio/login.html'), name='login'),
-    #path('logout/', auth_views.LogoutView.as_view(template_name='portfolio/logout.html'), name='logout'),
-
-
+    path('auth/jwt/', include('djoser.urls.jwt')),
 ]
 
 if settings.DEBUG:

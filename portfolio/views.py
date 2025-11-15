@@ -18,15 +18,22 @@ def certificate_list(request):
     issuers = CertificateIssuer.objects.all().order_by("name")
 
     if issuer_id:
-        certificates = Certificate.objects.filter(issuer__id=issuer_id)
+        try:
+            issuer_id_int = int(issuer_id)
+            certificates = Certificate.objects.filter(issuer__id=issuer_id_int)
+            selected_issuer = issuer_id_int
+        except (ValueError, TypeError):
+            certificates = Certificate.objects.none()
+            selected_issuer = None
     else:
         certificates = Certificate.objects.none()
+        selected_issuer = None
 
     return render(request, "portfolio/certificates.html", {
         "certificates": certificates,
         "issuers": issuers,
-        "selected_issuer": int(issuer_id) if issuer_id else None,})
+        "selected_issuer": selected_issuer,})
 
 @login_required
 def cv(request):
-    return render(request, 'portfolio/cv.html')  # Oder PDF-Redirect
+    return render(request, 'portfolio/cv.html')

@@ -47,6 +47,9 @@ class CertificateIssuerFactory(factory.django.DjangoModelFactory):
 class CertificateFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Certificate
+    
+    name = factory.Faker('catch_phrase')
+    category = factory.Faker('word')
     issue_date = factory.Faker('past_date')
     issuer = factory.SubFactory(CertificateIssuerFactory)
-    name = factory.Faker('catch_phrase')
+    pdf_file = factory.django.FileField(filename='certificate.pdf')

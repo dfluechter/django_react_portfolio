@@ -62,6 +62,18 @@ def test_certificate_list_view_authenticated_with_issuer(client):
     assert response.context['selected_issuer'] == issuer.id
 
 @pytest.mark.django_db
+def test_certificate_list_view_with_invalid_issuer_id(client):
+    user = UserFactory()
+    client.force_login(user)
+    url = reverse('certificate_list')
+    response = client.get(url, {'issuer': 'invalid'})
+    assert response.status_code == 200
+    assertTemplateUsed(response, 'portfolio/certificates.html')
+    assert 'certificates' in response.context
+    assert len(response.context['certificates']) == 0
+    assert response.context['selected_issuer'] is None
+
+@pytest.mark.django_db
 def test_certificate_list_view_unauthenticated(client):
     url = reverse('certificate_list')
     response = client.get(url)
