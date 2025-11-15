@@ -12,10 +12,9 @@ ALLOWED_HOSTS = []
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
-CSRF_TRUSTED_ORIGINS = ['https://'+os.environ.get('RENDER_EXTERNAL_HOSTNAME')]
+
 SECRET_KEY = os.environ.get('SECRET_KEY')
 CORS_ALLOW_ALL_ORIGINS = False
-#ALLOWED_HOSTS = ['myportfolio-a3od.onrender.com']
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -60,7 +59,7 @@ STORAGES = {
 DATABASES = {
     'default': dj_database_url.config(
         conn_max_age=600,
-        ssl_require=True # SSL für die Datenbankverbindung erzwingen
+        ssl_require=True  # Enforce SSL for database connection
     )
 }
 
