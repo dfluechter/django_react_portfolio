@@ -1,17 +1,21 @@
-# Exported from Render on 2025-08-19T00:03:17Z
+# Exported from Render on 2025-11-23T07:09:03Z
+version: "1"
 services:
-  - type: web
-    name: MyPortfolio
-    runtime: python
-    repo: https://github.com/dfluechter/django_react_portfolio
-    plan: free
-    envVars:
-      - key: DATABASE_URL
-        value: postgres://user:password@host:5432/dbname
-      - key: PYTHON_VERSION
-        value: '3.13'
-    region: frankfurt
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn config.wsgi:application
-    autoDeployTrigger: commit
-version: '1'
+- type: web
+  name: my_django_app
+  runtime: python
+  repo: https://github.com/dfluechter/django_react_portfolio
+  plan: free
+  envVars:
+  - key: SECRET_KEY
+    sync: false
+  - key: PYTHON_VERSION
+    sync: false
+  - key: DJANGO_ENV
+    sync: false
+  - key: DATABASE_URL
+    sync: false
+  region: frankfurt
+  buildCommand: ./build.sh
+  startCommand: gunicorn config.wsgi:application
+  autoDeployTrigger: commit
