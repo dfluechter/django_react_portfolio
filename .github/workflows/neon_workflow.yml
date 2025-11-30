@@ -40,7 +40,7 @@ jobs:
         run: echo "EXPIRES_AT=$(date -u --date '+14 days' +'%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_ENV"
       - name: Create Neon Branch
         id: create_neon_branch
-        uses: neondatabase/create-branch-action@v6
+        uses: neondatabase/create-branch-action@f642cf9c91ab9bf742ec8217b9615e0e42e437dd # v6.1.1
         with:
           project_id: ${{ vars.NEON_PROJECT_ID }}
           branch_name: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
