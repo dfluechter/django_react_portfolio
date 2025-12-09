@@ -11,6 +11,7 @@ cleo==2.1.0
 click==8.2.1
 colorama==0.4.6
 coverage==7.10.5
+magic
 crashtest==0.4.1
 cryptography==45.0.6
 defusedxml==0.7.1
