@@ -1,14 +1,10 @@
-import os
+from .settings_dev import * # Importiert alle dev-Einstellungen zuerst
 import dj_database_url
-from pathlib import Path
-import environ
-from .settings_dev import *
+from decouple import config
 
-env = environ.Env()
-environ.Env.read_env()
-DEBUG = False
-BASE_DIR = Path(__file__).resolve().parent.parent
-ALLOWED_HOSTS = []
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = ['my-django-app-e4l2.onrender.com']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -58,11 +54,9 @@ STORAGES = {
 
 DATABASES = {
     'default': dj_database_url.config(
-        conn_max_age=600,
-        ssl_require=True  # Enforce SSL for database connection
+        default=config('DATABASE_URL')
     )
 }
-
 
 ROOT_URLCONF = "config.urls"
 
