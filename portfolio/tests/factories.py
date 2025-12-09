@@ -70,7 +70,22 @@ class ProjectFactory(factory.django.DjangoModelFactory):
             # Falls Technologielisten beim Factory-Aufruf explizit übergeben wurden
             for tech in extracted:
                 self.technologies.add(tech)
-        elif 'count' in kwargs:
-            # Erstellt X zufällige Technologien, falls count=X übergeben wurde
-            count = kwargs.get('count')
-            TechnologyFactory.create_batch(count, projects=[self])
+        else:
+            # Add 2 random technologies if none are provided
+            techs = TechnologyFactory.create_batch(2)
+            self.technologies.add(*techs)
+
+class CertificateIssuerFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = CertificateIssuer
+    name = factory.Faker('company')
+    
+class CertificateFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Certificate
+    
+    name = factory.Faker('catch_phrase')
+    category = factory.Faker('word')
+    issue_date = factory.Faker('past_date')
+    issuer = factory.SubFactory(CertificateIssuerFactory)
+    pdf_file = factory.django.FileField(filename='certificate.pdf')
