@@ -30,7 +30,7 @@ environ==1.0
 factory_boy==3.3.3
 Faker==37.5.3
 fastjsonschema==2.21.2
-filelock==3.18.0
+filelock==3.20.1
 findpython==0.6.3
 folium==0.20.0
 gunicorn==23.0.0
