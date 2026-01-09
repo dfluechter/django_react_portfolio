@@ -7,6 +7,29 @@ from django.core.validators import FileExtensionValidator
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+def certificate_upload_path(instance, filename):
+    # Für Migration 0002
+    return f'certificates/{filename}'
+
+def certificate_pdf_upload_path(instance, filename):
+    # Für Migration 0006
+    return f'certificates/{filename}'
+
+def project_image_upload_path(instance, filename):
+    # Für Migration 0005 (Das war der letzte Fehler!)
+    return f'projects/{filename}'
+
+def validate_pdf_mimetype(file):
+    # Für Migration 0006
+    try:
+        mime_type = magic.from_buffer(file.read(2048), mime=True)
+        file.seek(0)
+        if mime_type != 'application/pdf':
+            raise ValidationError('Unsupported file type.')
+    except Exception:
+        # Fallback, falls Datei leer oder magic nicht verfügbar
+        file.seek(0)
+
 def validate_mime_type_pdf(file):
     """
     Validates that the uploaded file is actually a PDF by inspecting its header (Magic Bytes).
