@@ -92,7 +92,7 @@ urllib3==2.6.0
 uvicorn==0.35.0
 virtualenv==20.31.2
 WebOb==1.8.9
-wheel==0.45.1
+wheel==0.46.2
 whitenoise==6.9.0
 xyzservices==2025.4.0
 zstandard==0.24.0
